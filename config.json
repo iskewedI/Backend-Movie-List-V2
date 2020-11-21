@@ -1,0 +1,15 @@
+{
+    "endpoints": {
+      "Users": "/api/users",
+      "Auth": "/api/auth",
+      "MyList": "/api/myList"
+    },
+    "messages": {
+      "notFound": "Not found.",
+      "alreadyExisting": "Already existing.",
+      "invalidAuth": "Invalid email or password",
+      "noTokenProvided": "Access denied. No token provided.",
+      "accessDenied": "Access denied.",
+      "invalidToken": "Invalid token."
+    }
+  }

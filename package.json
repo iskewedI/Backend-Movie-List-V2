@@ -1,0 +1,32 @@
+{
+  "name": "backend-moviesv2",
+  "version": "1.0.0",
+  "description": "The backend for New Movies List v2",
+  "main": "index.js",
+  "scripts": {
+    "start": "start",
+    "test": "test",
+    "debug": "nodemon --inspect index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iskewedI/backend-moviesListv2.git"
+  },
+  "author": "Joaquin Tornello (iskewedi)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iskewedI/backend-moviesListv2/issues"
+  },
+  "homepage": "https://github.com/iskewedI/backend-moviesListv2#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "config": "^3.3.2",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.15",
+    "nodemon": "^2.0.6"
+  }
+}
