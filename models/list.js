@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const { userSchema } = require('./user');
 const Joi = require('joi');
 
-const myListSchema = new mongoose.Schema({
+const listSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 1, maxlength: 25 },
   content: {
     type: [String],
@@ -28,16 +27,19 @@ const myListSchema = new mongoose.Schema({
   // isAdmin: { type: Boolean },
 });
 
-const MyList = mongoose.model('MyList', myListSchema);
+listSchema.statics.lookup = function (userId) {
+  return this.find().where('owner._id').equals(userId);
+};
+
+const List = mongoose.model('List', listSchema);
 
 function validate(myList) {
   const schema = Joi.object({
     name: Joi.string().min(1).required(),
-    userId: Joi.objectId().required(),
     list: Joi.array().required(),
   });
   return schema.validate(myList);
 }
 
-exports.MyList = MyList;
+exports.List = List;
 exports.validate = validate;

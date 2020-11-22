@@ -2,7 +2,7 @@
     "endpoints": {
       "Users": "/api/users",
       "Auth": "/api/auth",
-      "MyList": "/api/myList"
+      "Lists": "/api/lists"
     },
     "messages": {
       "notFound": "Not found.",
