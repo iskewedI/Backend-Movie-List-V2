@@ -7,14 +7,15 @@ const validateBody = require('../middleware/validateBody');
 
 router.post('/', validateBody(validate), async ({ body }, res) => {
   const user = await User.findOne({ email: body.email });
-  if (!user) return res.status(400).send('Unauthorized.');
+  if (!user) return res.status(400).send('Wrong email or password, please try again.');
 
   const validPassword = await bcrypt.compare(body.password, user.password);
-  if (!validPassword) return res.status(400).send('Unauthorized.');
+  if (!validPassword)
+    return res.status(400).send('Wrong email or password, please try again.');
 
   const token = user.generateAuthToken();
 
-  res.send(token);
+  res.send({ token });
 });
 
 function validate(req) {

@@ -6,7 +6,6 @@
     },
     "messages": {
       "notFound": "Not found.",
-      "alreadyExisting": "Already existing.",
       "invalidAuth": "Invalid email or password",
       "noTokenProvided": "Access denied. No token provided.",
       "accessDenied": "Access denied.",
