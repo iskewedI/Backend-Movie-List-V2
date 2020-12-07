@@ -4,7 +4,7 @@
   "description": "The backend for New Movies List v2",
   "main": "index.js",
   "scripts": {
-    "start": "start",
+    "start": "node index.js",
     "test": "test",
     "debug": "nodemon --inspect index.js"
   },
