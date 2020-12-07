@@ -1,4 +1,4 @@
 {
     "jwtPrivateKey": "moviesv2_key",
-    "db": "moviesv2_backend"
+    "db": "moviesv2_db"
   }
