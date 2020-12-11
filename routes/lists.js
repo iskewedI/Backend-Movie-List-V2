@@ -32,8 +32,8 @@ router.post('/', auth, validateBody(validate), async ({ user: reqUser, body }, r
   //Generating list
   const list = new List({
     name: body.name,
-    content: body.list,
-    owner: _.pick(user, ['name', 'email', '_id']),
+    content: body.content,
+    owner: _.pick(user, ['username', 'email', '_id']),
   });
 
   await list.save();

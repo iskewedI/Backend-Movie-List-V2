@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     maxlength: 255,
   },
   password: { type: String, required: true, minlength: 5, maxlength: 1024 }, //Hashed password!,
-  // isAdmin: { type: Boolean },
+  isAdmin: { type: Boolean },
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -32,7 +32,7 @@ function validate(user) {
   const schema = Joi.object({
     username: Joi.string().min(5).max(50).required(),
     email: Joi.string().min(5).max(255).email().required(),
-    password: Joi.string().min(5).max(255).required(), //User password | Can be validated with "joi-password-complexity"
+    password: Joi.complexPassword().required(),
   });
   return schema.validate(user);
 }

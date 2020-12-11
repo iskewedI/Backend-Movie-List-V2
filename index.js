@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+require('./startup/logging')(); //Api Validation initialization
 require('./startup/db')(); //Database initialization
 require('./startup/routes')(app); //Routes settings
 require('./startup/config')(); //Environment configuration

@@ -11,7 +11,7 @@ const listSchema = new mongoose.Schema({
     maxlength: 100,
   },
   owner: new mongoose.Schema({
-    name: {
+    username: {
       type: String,
       required: true,
       minlength: 5,
@@ -36,7 +36,8 @@ const List = mongoose.model('List', listSchema);
 function validate(myList) {
   const schema = Joi.object({
     name: Joi.string().min(1).required(),
-    list: Joi.array().required(),
+    content: Joi.array().required(),
+    //Owner: se lo pego con el authToken
   });
   return schema.validate(myList);
 }
