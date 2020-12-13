@@ -41,4 +41,37 @@ router.post('/', auth, validateBody(validate), async ({ user: reqUser, body }, r
   res.send(list);
 });
 
+router.put('/', auth, async ({ user: reqUser, body }, res) => {
+  const user = await User.findById(reqUser._id);
+  if (!user) return res.status(404).send('User not found.');
+
+  const list = await List.findOne({ name: body.name, owner: user });
+  if (!list) return res.status(404).send("The list couldn't be found.");
+
+  if (body.newName) {
+    const toValidate = { name: body.newName, content: [] };
+
+    const { error } = validate(toValidate);
+
+    if (error) return res.status(400).send(error.message);
+
+    list.name = body.newName;
+  }
+
+  let content = [...list.content];
+
+  if (body.removed) {
+    content = content.filter(e => !body.removed.includes(e));
+  }
+  if (body.added) {
+    content.push(...body.added);
+  }
+
+  list.content = content;
+
+  await list.save();
+
+  res.send(_.pick(list, ['content', 'name']));
+});
+
 module.exports = router;
