@@ -5,9 +5,7 @@ const listSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 1, maxlength: 25 },
   content: {
     type: [String],
-    unique: true,
     required: true,
-    minlength: 1,
     maxlength: 100,
   },
   owner: new mongoose.Schema({
@@ -17,14 +15,7 @@ const listSchema = new mongoose.Schema({
       minlength: 5,
       maxlength: 50,
     },
-    email: {
-      type: String,
-      minlength: 5,
-      maxlength: 255,
-      required: true,
-    },
   }),
-  // isAdmin: { type: Boolean },
 });
 
 listSchema.statics.lookup = function (userId) {
