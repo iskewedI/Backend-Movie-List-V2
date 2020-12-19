@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const messages = require('../config.json');
 const { User, validate } = require('../models/user');
 const validateBody = require('../middleware/validateBody');
+const admin = require('../middleware/admin');
 const auth = require('../middleware/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', [auth, admin], async (req, res) => {
   const users = await User.find().sort('username');
   res.send(users);
 });

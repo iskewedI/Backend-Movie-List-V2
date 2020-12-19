@@ -7,7 +7,7 @@ const validateBody = require('../middleware/validateBody');
 const auth = require('../middleware/auth');
 const { messages } = require('../config.json');
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   const lists = await List.find().sort('name');
 
   res.send(lists);
@@ -45,7 +45,10 @@ router.put('/', auth, async ({ user: reqUser, body }, res) => {
   const user = await User.findById(reqUser._id);
   if (!user) return res.status(404).send('User not found.');
 
-  const list = await List.findOne({ name: body.name, owner: user });
+  const list = await List.findOne({ name: body.name, owner: user }).select({
+    name: 1,
+    content: 1,
+  });
   if (!list) return res.status(404).send("The list couldn't be found.");
 
   if (body.newName) {
@@ -67,7 +70,7 @@ router.put('/', auth, async ({ user: reqUser, body }, res) => {
     content.push(...body.added);
   }
 
-  list.content = content;
+  list.set({ content });
 
   await list.save();
 
