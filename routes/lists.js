@@ -64,7 +64,7 @@ router.put('/', auth, async ({ user: reqUser, body }, res) => {
   let content = [];
 
   if (list.content) {
-    content.push(list.content);
+    content = list.content.split(';');
   }
 
   if (body.removed) {
