@@ -32,7 +32,6 @@ router.post('/', auth, validateBody(validate), async ({ user: reqUser, body }, r
   //Generating list
   const list = new List({
     name: body.name,
-    content: body.content || [],
     owner: _.pick(user, ['username', '_id']),
   });
 
@@ -49,6 +48,7 @@ router.put('/', auth, async ({ user: reqUser, body }, res) => {
     name: 1,
     content: 1,
   });
+
   if (!list) return res.status(404).send("The list couldn't be found.");
 
   if (body.newName) {
@@ -61,7 +61,11 @@ router.put('/', auth, async ({ user: reqUser, body }, res) => {
     list.name = body.newName;
   }
 
-  let content = [...list.content];
+  let content = [];
+
+  if (list.content) {
+    content.push(list.content);
+  }
 
   if (body.removed) {
     content = content.filter(e => !body.removed.includes(e));

@@ -5,7 +5,7 @@ const listSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 1, maxlength: 25 },
   content: {
     type: [String],
-    required: true,
+    required: false,
     maxlength: 100,
   },
   owner: new mongoose.Schema({
