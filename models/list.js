@@ -4,9 +4,8 @@ const Joi = require('joi');
 const listSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 1, maxlength: 25 },
   content: {
-    type: [String],
-    required: false,
-    maxlength: 100,
+    type: String,
+    maxlength: 1000,
   },
   owner: new mongoose.Schema({
     username: {
@@ -27,8 +26,7 @@ const List = mongoose.model('List', listSchema);
 function validate(myList) {
   const schema = Joi.object({
     name: Joi.string().min(1).required(),
-    content: Joi.array().required(),
-    //Owner: se lo pego con el authToken
+    content: Joi.array().max(500), //The content comes as an array
   });
   return schema.validate(myList);
 }
