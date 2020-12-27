@@ -17,6 +17,8 @@ const listSchema = new mongoose.Schema({
   }),
 });
 
+listSchema.plugin(require('mongoose-beautiful-unique-validation'));
+
 listSchema.statics.lookup = function (userId) {
   return this.find().where('owner._id').equals(userId);
 };

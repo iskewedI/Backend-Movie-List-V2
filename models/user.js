@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean },
 });
 
+userSchema.plugin(require('mongoose-beautiful-unique-validation'));
+
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign(
     {
