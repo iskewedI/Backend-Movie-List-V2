@@ -74,7 +74,7 @@ router.put('/', auth, async ({ user: reqUser, body }, res) => {
     content.push(...body.added);
   }
 
-  list.set({ content });
+  list.set({ content: content.join(';') });
 
   await list.save();
 
