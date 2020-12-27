@@ -6,6 +6,7 @@ const listSchema = new mongoose.Schema({
   content: {
     type: String,
     maxlength: 1000,
+    default: '',
   },
   owner: new mongoose.Schema({
     username: {
