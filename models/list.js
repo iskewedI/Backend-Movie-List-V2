@@ -30,7 +30,7 @@ function validate(myList) {
   const schema = Joi.object({
     name: Joi.string().min(1).required(),
     content: Joi.array().max(500), //The content comes as an array
-  });
+  }).options({ allowUnknown: true });
   return schema.validate(myList);
 }
 

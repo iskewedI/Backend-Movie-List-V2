@@ -30,12 +30,74 @@ userSchema.methods.generateAuthToken = function () {
 
 const User = mongoose.model('User', userSchema);
 
-function validate(user) {
-  const schema = Joi.object({
-    username: Joi.string().min(5).max(50).required(),
-    email: Joi.string().min(5).max(255).email().required(),
-    password: Joi.complexPassword().required(),
+const localisedMessages = () => {
+  const map = new Map();
+
+  const translatedFields = lang => ({
+    username: lang === 'en' ? 'Username' : 'Nombre de usuario',
+    email: 'email',
+    password: lang === 'en' ? 'Password' : 'Contraseña',
   });
+
+  const getMessages = ({ stringBase, stringEmpty, stringMin, stringMax, required }) => ({
+    'string.base': stringBase,
+    'string.empty': stringEmpty,
+    'string.min': stringMin,
+    'string.max': stringMax,
+    'any.required': required,
+  });
+
+  map.set('en', (name, required) => {
+    const localisedName = translatedFields('en')[name];
+
+    return getMessages({
+      stringBase: `${localisedName} should be a type of string`,
+      stringEmpty: `${localisedName} cannot be an empty field`,
+      stringMin: `${localisedName} should have a minimum length of {#limit}`,
+      stringMax: `${localisedName} should have a maximum length of {#limit}`,
+      required: `${localisedName} is ${required ? 'required' : 'not required'}`,
+    });
+  });
+
+  map.set('es', (name, required) => {
+    const localisedName = translatedFields('es')[name];
+
+    return getMessages({
+      stringBase: `${localisedName} debería ser del tipo texto`,
+      stringEmpty: `${localisedName} no puede estar vacío`,
+      stringMin: `${localisedName} deberia tener un minimo de {#limit} caracteres`,
+      stringMax: `${localisedName} supera el límite de caracteres`,
+      required: `${localisedName} es ${required ? 'requerido' : 'no requerido'}`,
+    });
+  });
+
+  return map;
+};
+
+function validate(user) {
+  const { language } = user;
+
+  const messages = localisedMessages();
+
+  const schema = Joi.object({
+    username: Joi.string()
+      .min(4)
+      .max(20)
+      .required()
+      .messages(messages.get(language)('username', true)),
+    email: Joi.string()
+      .min(5)
+      .max(255)
+      .email()
+      .required()
+      .messages(messages.get(language)('email', true)),
+    password: Joi.string()
+      .min(5)
+      .max(25)
+      .required()
+      .messages(messages.get(language)('password', true)),
+  }).options({ allowUnknown: true });
+
   return schema.validate(user);
 }
 

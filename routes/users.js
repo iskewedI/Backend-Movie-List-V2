@@ -20,8 +20,13 @@ router.get('/me', auth, async (req, res) => {
 
 router.post('/', validateBody(validate), async ({ body }, res) => {
   const registeredUser = await User.findOne({ email: body.email });
-  if (registeredUser)
-    return res.status(400).send('An user with this data is already registered.');
+  if (registeredUser) {
+    const message =
+      body.language === 'en'
+        ? 'An user with this data is already registered.'
+        : 'Un usuario con estos datos ya ha sido registrado.';
+    return res.status(400).send(message);
+  }
 
   //Generating user and hashing password
   const user = new User(_.pick(body, ['username', 'email', 'password']));
